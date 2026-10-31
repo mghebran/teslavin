@@ -32,7 +32,10 @@ class VinService:
                 return cached
 
         options = self._call("options", vin, lambda: self.client.options(vin)) or []
-        specs = (self._call("specs", vin, lambda: self.client.specs(vin)) or {}) if with_specs else {}
+        specs = {}
+        if with_specs:
+            # 403 here means the app lacks the vehicle_specs scope; report without specs rather than fail.
+            specs = self._call("specs", vin, lambda: self.client.specs(vin), optional=True) or {}
         upgrades = subs = None
         if with_eligibility:
             upgrades = self._call("upgrades", vin, lambda: self.client.upgrade_eligibility(vin), optional=True)
@@ -57,5 +60,7 @@ class VinService:
         except FleetAPIError as e:
             self.store.log_call(key, endpoint, False, f"{e.status}")
             if optional or e.status == 404:
+                import sys
+                print(f"  [warn] {endpoint}: HTTP {e.status} {e.body[:120]}", file=sys.stderr)
                 return None
             raise
