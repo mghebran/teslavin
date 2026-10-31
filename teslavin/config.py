@@ -12,7 +12,7 @@ REGIONS = {
 TOKEN_URL = "https://fleet-auth.prd.vn.cloud.tesla.com/oauth2/v3/token"
 
 # Minimal read-only scopes for a VIN report. No command scopes on purpose.
-DEFAULT_SCOPES = "openid vehicle_specs vehicle_pricing_info"
+DEFAULT_SCOPES = "openid vehicle_device_data vehicle_specs vehicle_pricing_info"
 
 
 def _load_dotenv(path: Path) -> None:

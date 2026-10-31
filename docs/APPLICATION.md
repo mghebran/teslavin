@@ -34,6 +34,7 @@ order Tesla asks for it. Replace the bracketed placeholders.
 **Purpose of use:** Consumer vehicle research / pre-purchase verification.
 
 **Scopes requested (and only these):**
+- `vehicle_device_data` — `GET /api/1/dx/vehicles/options` (option codes; Tesla returns "missing scope: vehicle_device_data" without it)
 - `vehicle_specs` — `GET /api/1/vehicles/{vin}/specs` (as-sold specs + battery health)
 - `vehicle_pricing_info` — `POST /api/1/dx/vehicles/pricing` (list prices for option codes)
 - `openid` — required for token issuance
